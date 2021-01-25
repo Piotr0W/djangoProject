@@ -9,22 +9,117 @@
 </head>
 <body>
 
-<div class="content">
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="container-sm" style="text-align: center;">
-                    <h1 class="mt-2 mb-4">ToDoList</h1>
-                    <small class="text-muted">Django ToDo App</small>
+
+<div class="container">
+    <div class="content">
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="container-sm" style="text-align: center;">
+                        <h1 class="mt-2 mb-4">ToDoList</h1>
+                        <small class="text-muted">Django ToDo App</small>
+                    </div>
+                </div>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <form class="row g-3" action="" method="post">
+            {% csrf_token %}
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="task_name" placeholder="Task name" name="task_name">
+                    <label for="task_name">Task name</label>
                 </div>
             </div>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
+            <div class="col-md-3">
+                <div class="form-floating">
+                    <select class="form-select" id="category" aria-label="Floating label select example"
+                            name="category_name">
+                        <option selected>Choose category</option>
+                        {% for category in categories %}
+                            <option class="" value="{{ category.category_name }}"
+                                    name="{{ category.category_name }}">{{ category.category_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="category">Category</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-floating">
+                    <input type="date" id="deadline_date" class="form-control" name="deadline_date">
+                    <label for="deadline_date">Deadline date</label>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    <textarea type="text" class="form-control" id="description" placeholder="Description"
+                              name="description"></textarea>
+                    <label for="description">Description</label>
+                </div>
+            </div>
+            <div class="row">
+                <p><br></p>
+                <div class="col-2">
+                    <button name="taskAdd" type="submit" class="btn btn-primary"><i class="fa fa-plus icon"></i>Add task
+                    </button>
+                </div>
+                <div class="col-1">
+                    <button name="taskDelete" formnovalidate="" type="submit" onclick="$('input#sublist').click();"
+                            class="btn btn-primary">Delete
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="list-group">
+                    {% for todo in tasks %}
+                        <a class="list-group-item list-group-item-action list-group-item-primary"
+                           data-bs-toggle="collapse" href="#read_description{{ todo.id }}" role="button"
+                           aria-expanded="false" aria-controls="read_description">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="checkbox" id="{{ todo.id }}"
+                                       value="{{ todo.id }}">
+                                <label class="form-check-label" for="{{ todo.id }}">
+                                    <span class="complete-">{{ todo.task_name }}</span>
+
+
+
+
+                                    <p>{{ time_interval }}</p>
+
+
+
+
+
+                                </label>
+                            </div>
+                            <span style="float:right; color: #ff5000;"
+                                  class="nav justify-content-center">{{ todo.category }}</span>
+                            <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created_at }}
+                                - {{ todo.deadline_date }}
+                            </strong>
+                            <div class="collapse" id="read_description{{ todo.id }}">
+                                <div class="card card-body">
+                                    <label class="form-check-label" for="{{ todo.description }}">
+                                        <span class="complete-">{{ todo.description }}</span>
+
+
+                                    </label>
+                                </div>
+                            </div>
+                        </a> {% endfor %}
+                </div>
+            </div>
+        </form>
+
+    </div>
+
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
