@@ -10,10 +10,9 @@ import ToDoList.models
 
 
 # Create your views here.
-temp = []
+
 
 def index(request):
-
     tasks = ToDoList.models.Task.objects.all()
     categories = ToDoList.models.Category.objects.all()
     if not categories:
@@ -37,23 +36,19 @@ def index(request):
 
 
             date_format = "%Y/%m/%d"
-            time_interval = abs((datetime.strptime(date.today().strftime("%Y/%m/%d"), date_format) - datetime.strptime(deadline_date.replace('-', '/'), date_format)).days)
-            temp.append(time_interval)
-            for i in temp:
-                print(i)
+            time_interval = int(abs((datetime.strptime(date.today().strftime("%Y/%m/%d"), date_format) - datetime.strptime(deadline_date.replace('-', '/'), date_format)).days))
 
 
 
-            Todo = ToDoList.models.Task(task_name=task_name, description=description, deadline_date=deadline_date,
+            Todo = ToDoList.models.Task(task_name=task_name, description=description, deadline_date=deadline_date, time_interval=time_interval,
                                         category=ToDoList.models.Category.objects.get(category_name=category_name))
             Todo.save()
-            return render(request, "index.html", {"tasks": tasks, "categories": categories, "temp": temp})
+            return redirect("/")
 
         if "taskDelete" in request.POST:
             tasks_to_delete = request.POST.getlist('checkbox', False)
             for task_to_delete in tasks_to_delete:
                 todo = ToDoList.models.Task.objects.get(id=int(task_to_delete))
-                temp.clear()
                 todo.delete()
 
     return render(request, "index.html", {"tasks": tasks, "categories": categories})

@@ -91,49 +91,47 @@
 
 
                         {% for todo in tasks %}
-                            {% for temp_1 in temp %}
-                                <tr class="table-active">
+                            <tr class="table-active">
 
-                                    <td>
+                                <td>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="checkbox"
+                                                   id="{{ todo.id }}"
+                                                   value="{{ todo.id }}">
+                                            <label class="form-check-label" for="{{ todo.id }}">
+                                            </label>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="list-group-item list-group-item-action list-group-item-primary"
+                                       data-bs-toggle="collapse" href="#read_description{{ todo.id }}" role="button"
+                                       aria-expanded="false" aria-controls="read_description">
                                         <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" name="checkbox"
-                                                       id="{{ todo.id }}"
-                                                       value="{{ todo.id }}">
-                                                <label class="form-check-label" for="{{ todo.id }}">
-                                                </label>
-                                            </label>
+                                            <span class="complete-">{{ todo.task_name }}</span>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <a class="list-group-item list-group-item-action list-group-item-primary"
-                                           data-bs-toggle="collapse" href="#read_description{{ todo.id }}" role="button"
-                                           aria-expanded="false" aria-controls="read_description">
-                                            <div class="form-check">
-                                                <span class="complete-">{{ todo.task_name }}</span>
-                                            </div>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div class="col-md-12" id="read_description{{ todo.id }}">
-                                            <label class="form-check-label" for="{{ todo.description }}">
-                                                <span class="complete-">{{ todo.description }}</span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
+                                    </a>
+                                </td>
+                                <td>
+                                    <div class="col-md-12" id="read_description{{ todo.id }}">
+                                        <label class="form-check-label" for="{{ todo.description }}">
+                                            <span class="complete-">{{ todo.description }}</span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+<span style="float:right; color: #ff5000;"
+      class="nav justify-content-center">{{ todo.time_interval }}</span>
 
-                                        <strong class="taskDate"><i class="fa fa-calendar"></i>{{ temp_1 }}
-                                        </strong>
-
-                                    </td>
-                                    <td><span style="float:right; color: #ff5000;"
-                                              class="nav justify-content-center">{{ todo.category }}</span>
-                                        <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created_at }}
-                                            - {{ todo.deadline_date }}
-                                        </strong></td>
-                                </tr>
-                            {% endfor %}{% endfor %}
+                                </td>
+                                <td><span style="float:right; color: #ff5000;"
+                                          class="nav justify-content-center">{{ todo.category }}</span>
+                                    <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created_at }}
+                                        - {{ todo.deadline_date }}
+                                    </strong></td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

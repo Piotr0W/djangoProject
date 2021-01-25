@@ -24,6 +24,7 @@ class Task(models.Model):
     description = models.TextField(blank=True)
     created_at = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
     deadline_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    time_interval = models.IntegerField(default=1, blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
 
     class Meta:
