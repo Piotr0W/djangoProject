@@ -11,6 +11,9 @@ from django.views.generic import ListView
 from django.urls import resolve
 from ToDoList.models import *
 
+# Upewnić się, że szukanie działa poprawnie i przycisk powrotu do menu
+# Zrobić filtrowanie na razie min po jednej kolumnie
+# Poprawić dobre wyświetlanie tabeli
 
 # Create your views here.
 def search(request):
