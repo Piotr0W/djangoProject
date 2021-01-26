@@ -8,29 +8,27 @@
     <title>ToDoList Web Application</title>
 </head>
 <body>
-
 <div class="container">
     <div class="content">
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="container-sm" style="text-align: center;">
-                        <h1 class="mt-2 mb-4">ToDoList</h1>
-                        <a class="btn btn-primary" href="/" role="button" style="width: 100%">Powrót do menu</a>
-
-                        <small class="text-muted">Django ToDo App</small>
-                    </div>
+                <div class="container-sm" style="text-align: center;">
+                    <h1 class="mt-2 mb-4">
+                        <a class="btn btn-secondary btn-lg" href="/" role="button">ToDoList</a>
+                    </h1></div>
+                <div class="container-sm" style="text-align: center;">
                     <form class="d-flex" action="{% url 'search_results' %}" method="get">
-                        <input class="form-control me-2" name="q" type="text" placeholder="Search"
+                        <input class="form-control me-2" name="query" type="text" placeholder="Search"
                                aria-label="Search">
-                        <button name="taskSearch" class="btn btn-outline-success" type="submit">Search
+                        <button name="taskSearch" class="btn btn-outline-success" value="taskSearch" type="submit">
+                            Search
                         </button>
-                        <input class="btn btn-outline-success" type="button" value="Go back!" onclick="history.back()">
+                        <div class="container-sm" style="text-align: right;"><input class="btn btn-outline-success"
+                                                                                    type="button" value="Back"
+                                                                                    onclick="history.back()"></div>
+
                     </form>
-
                 </div>
-
-
             </div>
         </nav>
         <form class="row g-3" action="" method="post">
@@ -67,140 +65,90 @@
                     <label for="description">Description</label>
                 </div>
             </div>
-            <div class="row">
-                <p><br></p>
-                <div class="col-2">
-                    <button name="taskAdd" type="submit" class="btn btn-primary"><i class="fa fa-plus icon"></i>Add task
-                    </button>
-                </div>
-                <div class="col-1">
-                    <button name="taskDelete" formnovalidate="" type="submit" onclick="$('input#sublist').click();"
-                            class="btn btn-primary">Delete
-                    </button>
-                </div>
-                <div class="container">
-                    <div class="list-group">
-
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th scope="col"><a href="/name/">
-                                    <input class="btn btn-outline-success" type="button" value="Go back!" onclick="history.back()">
-
-                                    Name</a></th>
-                                <th scope="col">Description</th>
-                                <th scope="col"><a href="/days/">Days remains</a></th>
-                                <th scope="col"><a href="/deadline/">Date</a></th>
-                                <th scope="col"><a href="/category/">Category</a></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            {% if object_list %}
-                                {% for todo in object_list %}
-
-                                    <tr class="table-active">
-
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input" name="checkbox"
-                                                           id="{{ todo.id }}"
-                                                           value="{{ todo.id }}">
-                                                    <label class="form-check-label" for="{{ todo.id }}">
-                                                    </label>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <a class="list-group-item list-group-item-action list-group-item-primary"
-                                               data-bs-toggle="collapse" href="#read_description{{ todo.id }}"
-                                               role="button"
-                                               aria-expanded="false" aria-controls="read_description">
-                                                <div class="form-check">
-                                                    <span class="complete-">{{ todo.task_name }}</span>
-                                                </div>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <p></p>
-                                            <div class="col-md-12" id="read_description{{ todo.id }}">
-                                                <label class="form-check-label" for="{{ todo.description }}">
-                                                    <span class="complete-">{{ todo.description }}</span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-<span style="float:right; color: #ff5000;"
-      class="nav justify-content-center">{{ todo.time_interval }}</span>
-
-                                        </td>
-                                        <td><span style="float:right; color: #ff5000;"
-                                                  class="nav justify-content-center">{{ todo.category }}</span>
-                                            <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created_at }}
-                                                - {{ todo.deadline_date }}
-                                            </strong></td>
-                                    </tr>
-                                {% endfor %}
-
-                            {% else %}
-
-                                {% for todo in tasks %}
 
 
-
-
-                                    <tr class="table-active">
-
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input" name="checkbox"
-                                                           id="{{ todo.id }}"
-                                                           value="{{ todo.id }}">
-                                                    <label class="form-check-label" for="{{ todo.id }}">
-                                                    </label>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <a class="list-group-item list-group-item-action list-group-item-primary"
-                                               data-bs-toggle="collapse" href="#read_description{{ todo.id }}"
-                                               role="button"
-                                               aria-expanded="false" aria-controls="read_description">
-                                                <div class="form-check">
-                                                    <span class="complete-">{{ todo.task_name }}</span>
-                                                </div>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <div class="col-md-12" id="read_description{{ todo.id }}">
-                                                <label class="form-check-label" for="{{ todo.description }}">
-                                                    <span class="complete-">{{ todo.description }}</span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-<span style="float:right; color: #ff5000;"
-      class="nav justify-content-center">{{ todo.time_interval }}</span>
-
-                                        </td>
-                                        <td><span style="float:right; color: #ff5000;"
-                                                  class="nav justify-content-center">{{ todo.category }}</span>
-                                            <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created_at }}
-                                                - {{ todo.deadline_date }}
-                                            </strong></td>
-                                    </tr>
-                                {% endfor %}{% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="col-2" style="text-align: center;">
+                <button name="taskAdd" type="submit" class="btn btn-outline-primary btn-lg btn-block"><i
+                        class="fa fa-plus icon"></i>Add task
+                </button>
             </div>
+            <div class="col-1">
+                <button name="taskDelete" formnovalidate="" type="submit" onclick="$('input#sublist').click();"
+                        class="btn btn-outline-primary btn-lg btn-block">Delete
+                </button>
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                <thead>
+                <th scope="col">Delete</th>
+                <th scope="col">
+
+                    <a href="/name/">Name
+                    </a>
+
+
+                </th>
+                <th scope="col"><a href="/deadline/">Created date - deadline date</a></th>
+                <th scope="col">Days left</th>
+                <th scope="col"><a href="/category/">Category</a></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for todo in object_list %}
+                    {% if todo.time_interval < 2 %}
+                        <tr class="table-danger">
+                            {% elif todo.time_interval < 10 %}
+                        <tr class="table-warning">
+                            {% else %}
+                        <tr class="table-secondary">
+                    {% endif %}
+                <td>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="checkbox"
+                                   id="{{ todo.id }}"
+                                   value="{{ todo.id }}">
+                            <label class="form-check-label" for="{{ todo.id }}">
+                            </label>
+                        </label>
+                    </div>
+                </td>
+                <td><a class="list-group-item list-group-item-action list-group-item-primary"
+                       data-bs-toggle="collapse" href="#read_description{{ todo.id }}" role="button"
+                       aria-expanded="false" aria-controls="read_description">
+                    <div class="form-check">
+                        <span class="complete-">{{ todo.task_name }}</span>
+                    </div>
+                </a>
+
+                    <div class="collapse" id="read_description{{ todo.id }}">
+                        <label class="form-check-label" for="{{ todo.description }}">
+                            <span class="complete-">{{ todo.description }}</span>
+                        </label>
+
+                    </div>
+
+                <td>
+                    <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created_at }}
+                        - {{ todo.deadline_date }}
+                    </strong></td>
+                <td>
+                    <strong class="taskDate"><i
+                            class="nav justify-content-center"></i>{{ todo.time_interval }}
+                    </strong></td>
+                <td>
+                    <strong class="taskDate"><i class="nav justify-content-center"></i>{{ todo.category }}
+                    </strong></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </form>
     </div>
-
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>

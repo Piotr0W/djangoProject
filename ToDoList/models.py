@@ -28,7 +28,7 @@ class Task(models.Model):
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["deadline_date"]
 
     def __str__(self):
         return self.task_name
