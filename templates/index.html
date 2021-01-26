@@ -16,6 +16,8 @@
                 <div class="row justify-content-center">
                     <div class="container-sm" style="text-align: center;">
                         <h1 class="mt-2 mb-4">ToDoList</h1>
+                        <a class="btn btn-primary" href="/" role="button" style="width: 100%">Powrót do menu</a>
+
                         <small class="text-muted">Django ToDo App</small>
                     </div>
                     <form class="d-flex" action="{% url 'search_results' %}" method="get">
@@ -23,6 +25,7 @@
                                aria-label="Search">
                         <button name="taskSearch" class="btn btn-outline-success" type="submit">Search
                         </button>
+                        <input class="btn btn-outline-success" type="button" value="Go back!" onclick="history.back()">
                     </form>
 
                 </div>
@@ -81,64 +84,114 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th scope="col">Mark</th>
-                                <th scope="col">Name</th>
+                                <th scope="col"><a href="/name/">
+                                    <input class="btn btn-outline-success" type="button" value="Go back!" onclick="history.back()">
+
+                                    Name</a></th>
                                 <th scope="col">Description</th>
-                                <th scope="col">Days remains</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Category</th>
+                                <th scope="col"><a href="/days/">Days remains</a></th>
+                                <th scope="col"><a href="/deadline/">Date</a></th>
+                                <th scope="col"><a href="/category/">Category</a></th>
                             </tr>
                             </thead>
                             <tbody>
 
+                            {% if object_list %}
+                                {% for todo in object_list %}
 
-                            {% for todo in tasks %}
+                                    <tr class="table-active">
 
-
-
-
-                                <tr class="table-active">
-
-                                    <td>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" name="checkbox"
-                                                       id="{{ todo.id }}"
-                                                       value="{{ todo.id }}">
-                                                <label class="form-check-label" for="{{ todo.id }}">
-                                                </label>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a class="list-group-item list-group-item-action list-group-item-primary"
-                                           data-bs-toggle="collapse" href="#read_description{{ todo.id }}"
-                                           role="button"
-                                           aria-expanded="false" aria-controls="read_description">
+                                        <td>
                                             <div class="form-check">
-                                                <span class="complete-">{{ todo.task_name }}</span>
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" name="checkbox"
+                                                           id="{{ todo.id }}"
+                                                           value="{{ todo.id }}">
+                                                    <label class="form-check-label" for="{{ todo.id }}">
+                                                    </label>
+                                                </label>
                                             </div>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div class="col-md-12" id="read_description{{ todo.id }}">
-                                            <label class="form-check-label" for="{{ todo.description }}">
-                                                <span class="complete-">{{ todo.description }}</span>
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
+                                        </td>
+                                        <td>
+                                            <a class="list-group-item list-group-item-action list-group-item-primary"
+                                               data-bs-toggle="collapse" href="#read_description{{ todo.id }}"
+                                               role="button"
+                                               aria-expanded="false" aria-controls="read_description">
+                                                <div class="form-check">
+                                                    <span class="complete-">{{ todo.task_name }}</span>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p></p>
+                                            <div class="col-md-12" id="read_description{{ todo.id }}">
+                                                <label class="form-check-label" for="{{ todo.description }}">
+                                                    <span class="complete-">{{ todo.description }}</span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
 <span style="float:right; color: #ff5000;"
       class="nav justify-content-center">{{ todo.time_interval }}</span>
 
-                                    </td>
-                                    <td><span style="float:right; color: #ff5000;"
-                                              class="nav justify-content-center">{{ todo.category }}</span>
-                                        <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created_at }}
-                                            - {{ todo.deadline_date }}
-                                        </strong></td>
-                                </tr>
-                            {% endfor %}
+                                        </td>
+                                        <td><span style="float:right; color: #ff5000;"
+                                                  class="nav justify-content-center">{{ todo.category }}</span>
+                                            <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created_at }}
+                                                - {{ todo.deadline_date }}
+                                            </strong></td>
+                                    </tr>
+                                {% endfor %}
+
+                            {% else %}
+
+                                {% for todo in tasks %}
+
+
+
+
+                                    <tr class="table-active">
+
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" name="checkbox"
+                                                           id="{{ todo.id }}"
+                                                           value="{{ todo.id }}">
+                                                    <label class="form-check-label" for="{{ todo.id }}">
+                                                    </label>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a class="list-group-item list-group-item-action list-group-item-primary"
+                                               data-bs-toggle="collapse" href="#read_description{{ todo.id }}"
+                                               role="button"
+                                               aria-expanded="false" aria-controls="read_description">
+                                                <div class="form-check">
+                                                    <span class="complete-">{{ todo.task_name }}</span>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="col-md-12" id="read_description{{ todo.id }}">
+                                                <label class="form-check-label" for="{{ todo.description }}">
+                                                    <span class="complete-">{{ todo.description }}</span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+<span style="float:right; color: #ff5000;"
+      class="nav justify-content-center">{{ todo.time_interval }}</span>
+
+                                        </td>
+                                        <td><span style="float:right; color: #ff5000;"
+                                                  class="nav justify-content-center">{{ todo.category }}</span>
+                                            <strong class="taskDate"><i class="fa fa-calendar"></i>{{ todo.created_at }}
+                                                - {{ todo.deadline_date }}
+                                            </strong></td>
+                                    </tr>
+                                {% endfor %}{% endif %}
                             </tbody>
                         </table>
                     </div>
